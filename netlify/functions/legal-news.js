@@ -14,49 +14,28 @@ const LEGAL_KEYWORDS = [
 ];
 
 exports.handler = async function (event, context) {
-    // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
-    const RSS_FEEDS = [
-        'https://feeds.feedburner.com/rsscna/social',      // 中央社
-        'https://news.pts.org.tw/xml/newsfeed.xml'          // 公視新聞
-    ];
-    // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
+    const CNA_SOCIAL_RSS_URL = 'https://feeds.feedburner.com/rsscna/social';
 
     try {
-        // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
-        // 使用 Promise.all 同時請求多個 RSS 來源
-        const feeds = await Promise.all(
-            RSS_FEEDS.map(url => parser.parseURL(url))
-        );
+        const feed = await parser.parseURL(CNA_SOCIAL_RSS_URL);
 
-        // 將所有來源的新聞項目合併成一個陣列
-        const allItems = feeds.reduce((acc, feed) => {
-            if (feed && feed.items) {
-                return acc.concat(feed.items);
-            }
-            return acc;
-        }, []);
-
-        if (allItems.length === 0) {
+        if (!feed.items || feed.items.length === 0) {
             return { statusCode: 200, body: JSON.stringify([]) };
         }
 
-        // 核心篩選邏輯：
-        // 1. 篩選標題包含關鍵字的新聞
-        // 2. 依照發布日期排序 (最新的在前面)
-        // 3. 擷取前 20 則
-        // 4. 整理成需要的格式
-        const filteredNews = allItems
+        // 核心篩選邏輯：檢查標題是否包含任何一個關鍵字
+        const filteredNews = feed.items
             .filter(item => 
                 item.title && LEGAL_KEYWORDS.some(keyword => item.title.includes(keyword))
             )
-            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate)) // 確保按時間倒序排列
-            .slice(0, 20) // 最多只回傳 20 則最新聞
+            // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
             .map(item => ({
                 title: item.title,
                 link: item.link,
-                pubDate: item.pubDate // 取得新聞的發布日期
-            }));
-        // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
+                pubDate: item.pubDate // 新增：取得新聞的發布日期
+            }))
+            // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
+            .slice(0, 20); // 最多只回傳 20 則最新聞
 
         return {
             statusCode: 200,
