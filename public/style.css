@@ -113,14 +113,43 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.news-container h2 {
-    margin-top: 0;
+/* ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼ */
+/* 新的標題容器，用 Flexbox 讓標題和連結並排 */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid #e0e0e0;
+}
+
+/* 重新定義容器內的 h2 樣式，移除邊界 */
+.section-header h2 {
+    margin: 0;
     color: #333;
     font-size: 1.5rem;
 }
+
+/* 「回到過勞儀表板」連結的樣式 */
+.back-link {
+    font-size: 0.9rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5em 1em;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap; /* 確保文字不換行 */
+}
+
+/* 滑鼠移到連結上的樣式 */
+.back-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+/* ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲ */
 
 #news-list {
     display: flex;
