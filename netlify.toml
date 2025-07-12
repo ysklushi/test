@@ -1,0 +1,11 @@
+[build]
+  # 告訴 Netlify，你的前端網頁都放在 "public" 這個資料夾裡
+  publish = "public"
+  # 告訴 Netlify，你的後端廚房都放在 "netlify/functions" 這個資料夾裡
+  functions = "netlify/functions"
+
+# 這段是魔法：它告訴 Netlify，把所有送到 /api/ 的請求，都轉給後端廚房處理
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200

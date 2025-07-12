@@ -1,0 +1,8 @@
+{
+  "name": "my-weather-app",
+  "version": "1.0.0",
+  "description": "A simple weather app using Netlify and CWA RSS",
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  }
+}
