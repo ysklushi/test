@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // ===================================
-    // ==== 天氣查詢小工具的程式碼 (不變) ====
+    // ==== 天氣查詢小工具的程式碼 ====
     // ===================================
     const locationSelect = document.getElementById('location-select');
     const weatherDisplay = document.getElementById('weather-display');
@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayWeather(event.target.value);
     });
 
+    // 頁面載入時，執行天氣查詢
     fetchAndDisplayWeather(locationSelect.value);
 
     // ===================================
@@ -92,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (newsItems.length === 0) {
                 newsListContainer.innerHTML = '目前沒有相關的法律新聞。';
-                newsListContainer.style.textAlign = 'center';
+                newsListContainer.classList.add('news-list-placeholder');
                 return;
             }
 
@@ -107,8 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('獲取法律新聞失敗:', error);
             newsListContainer.innerHTML = '載入新聞時發生錯誤，請稍後再試。';
+            newsListContainer.classList.add('news-list-placeholder');
             newsListContainer.style.color = 'red';
-            newsListContainer.style.textAlign = 'center';
         }
     }
 
