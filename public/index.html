@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>即時天氣概況</title>
+    <title>即時天氣與新聞</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,31 +12,37 @@
 <body>
 
     <header class="main-header">
-        <!-- 包一個容器讓置中和排版更容易 -->
         <div class="header-container">
             <div class="weather-widget">
+                <!-- 天氣工具部分不變 -->
                 <div class="location-selector">
                     <label for="location-select">地區天氣概況</label>
                     <select id="location-select">
-                        <!-- 選項不變 -->
                         <option value="01">臺北市</option><option value="02">新北市</option><option value="03">基隆市</option><option value="04">桃園市</option><option value="05">新竹縣</option><option value="06">新竹市</option><option value="07">苗栗縣</option><option value="08">臺中市</option><option value="09">彰化縣</option><option value="10">南投縣</option><option value="11">雲林縣</option><option value="12">嘉義縣</option><option value="13">嘉義市</option><option value="14">臺南市</option><option value="15">高雄市</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option>
                     </select>
                 </div>
-                
                 <div id="day-toggle-btn" class="day-toggle-container" title="切換預報時段">
                     <span class="toggle-label today active">今</span>
-                    <div class="toggle-switch">
-                        <div class="toggle-knob"></div>
-                    </div>
+                    <div class="toggle-switch"><div class="toggle-knob"></div></div>
                     <span class="toggle-label tomorrow">明</span>
                 </div>
-
                 <div id="weather-display" class="weather-info-box">
                     <p class="placeholder">請選擇地點以查詢天氣...</p>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- ▼▼▼▼▼ 新增的法律新聞區塊 ▼▼▼▼▼ -->
+    <main class="content-area">
+        <section id="legal-news-section" class="news-container">
+            <h2>法律新聞</h2>
+            <div id="news-list" class="news-list-placeholder">
+                正在載入新聞...
+            </div>
+        </section>
+    </main>
+    <!-- ▲▲▲▲▲ 新增的法律新聞區塊 ▲▲▲▲▲ -->
 
     <script src="script.js"></script>
 </body>
