@@ -1,9 +1,7 @@
 const Parser = require('rss-parser');
 const parser = new Parser();
 
-// 這就是 Netlify 認識的後端函式標準格式
 exports.handler = async function (event, context) {
-    // 從前端請求的網址中，取得 ?cityId=XX 的值
     const { cityId } = event.queryStringParameters;
     if (!cityId) {
         return {
@@ -22,24 +20,42 @@ exports.handler = async function (event, context) {
 
         const latestItem = feed.items[0];
         const content = latestItem.content;
-        let temperature = 'N/A', pop = 'N/A', description = content.split(' ')[2] || 'N/A';
-
-        const tempMatch = content.match(/溫度: (\d+ ~ \d+)/);
+        
+        // --- 全新的、更穩定的解析邏輯 ---
+        
+        // 1. 先精準地抓取溫度和降雨機率
+        let temperature = 'N/A';
+        let pop = 'N/A';
+        const tempMatch = content.match(/溫度: (\d+\s*~\s*\d+)/);
         if (tempMatch) temperature = tempMatch[1] + ' °C';
 
         const popMatch = content.match(/降雨機率: (\d+%)/);
         if (popMatch) pop = popMatch[1];
-
-        const weatherData = { description, temperature, pop };
         
-        // 成功時，回傳 200 和天氣資料
+        // 2. 從原始字串中，移除我們已經處理過的資訊
+        let description = content;
+        if (tempMatch) description = description.replace(tempMatch[0], '');
+        if (popMatch) description = description.replace(popMatch[0], '');
+        
+        // 3. 移除城市名稱和多餘的空格，剩下的就是乾淨的天氣描述
+        const cityName = feed.title.split(' ')[0]; // 從 "臺北市 - 36小時天氣預報" 中取出 "臺北市"
+        description = description.replace(cityName, '').trim();
+
+        // 整理最終要回傳的資料
+        const weatherData = {
+            description: description,
+            temperature: temperature,
+            pop: pop,
+        };
+        
+        // ------------------------------------
+
         return {
             statusCode: 200,
             body: JSON.stringify(weatherData),
         };
 
     } catch (error) {
-        // 失敗時，回傳 500 和錯誤訊息
         return {
             statusCode: 500,
             body: JSON.stringify({ error: error.message }),
