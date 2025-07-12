@@ -13,15 +13,17 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.weather-widget {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+.header-container {
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* 下拉選單 */
+.weather-widget {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 #location-select {
     font-size: 1rem;
     padding: 0.5rem 0.8rem;
@@ -30,60 +32,23 @@ body {
     cursor: pointer;
 }
 
-/* --- 全新的滑動按鈕樣式 --- */
+/* 滑動按鈕樣式 (不變) */
 .day-toggle-container {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
-    user-select: none; /* 防止選取文字 */
+    user-select: none;
     padding: 0.5rem;
 }
+.day-toggle-container.disabled { cursor: not-allowed; opacity: 0.5; }
+.toggle-label { font-weight: 500; color: #888; transition: color 0.3s; }
+.toggle-label.active { color: #007bff; font-weight: 700; }
+.toggle-switch { width: 48px; height: 26px; background-color: #ccc; border-radius: 13px; position: relative; transition: background-color 0.3s; }
+.toggle-knob { width: 22px; height: 22px; background-color: white; border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: transform 0.3s ease-in-out; }
+.day-toggle-container.toggled .toggle-switch { background-color: #007bff; }
+.day-toggle-container.toggled .toggle-knob { transform: translateX(22px); }
 
-.day-toggle-container.disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-.toggle-label {
-    font-weight: 500;
-    color: #888;
-    transition: color 0.3s;
-}
-
-.toggle-label.active {
-    color: #007bff;
-    font-weight: 700;
-}
-
-.toggle-switch {
-    width: 48px;
-    height: 26px;
-    background-color: #ccc;
-    border-radius: 13px;
-    position: relative;
-    transition: background-color 0.3s;
-}
-
-.toggle-knob {
-    width: 22px;
-    height: 22px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* 切換後的樣式 */
-.day-toggle-container.toggled .toggle-switch {
-    background-color: #007bff;
-}
-
-.day-toggle-container.toggled .toggle-knob {
-    transform: translateX(22px);
-}
 
 /* 天氣資訊顯示框 */
 .weather-info-box {
@@ -98,26 +63,34 @@ body {
     overflow: hidden;
 }
 
-.weather-info-box .loading,
-.weather-info-box .error,
-.weather-info-box .placeholder {
+.weather-info-box .loading, .weather-info-box .error, .weather-info-box .placeholder {
     width: 100%;
     text-align: center;
     font-style: italic;
     color: #555;
 }
 
-/* 使用 CSS Grid 完美對齊 */
+/* --- 全新的四欄式 Grid 佈局 --- */
 .weather-row {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr minmax(140px, auto) minmax(140px, auto);
+    /* 定義四欄：圖示、描述、溫度、降雨機率 */
+    grid-template-columns: 40px 1fr minmax(130px, auto) minmax(130px, auto);
     gap: 1rem;
     align-items: center;
     font-size: 0.95rem;
 }
 
-.weather-row .temperature,
-.weather-row .pop {
-    white-space: nowrap;
+/* --- 天氣圖示的樣式 --- */
+.weather-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke-width: 2; /* 線條粗細 */
+    color: #0056b3; /* 圖示顏色 */
 }
