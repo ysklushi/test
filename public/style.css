@@ -24,11 +24,13 @@ body {
     gap: 1rem;
 }
 
-/* ▼▼▼▼▼ 此處新增一個 class，用於手機版面控制 ▼▼▼▼▼ */
+/* ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼ */
 .location-selector {
     display: flex;
     align-items: center;
+    gap: 0.8rem; /* 新增：增加標籤與下拉選單之間的間距 */
 }
+/* ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲ */
 
 #location-select {
     font-size: 1rem;
@@ -136,14 +138,12 @@ body {
     font-size: 1.5rem;
 }
 
-/* ▼▼▼▼▼ 這裡是新增的樣式 ▼▼▼▼▼ */
 .source-credit {
     margin: 4px 0 0;
     font-size: 0.8rem;
     color: #6c757d;
     font-weight: 400;
 }
-/* ▲▲▲▲▲ 這裡是新增的樣式 ▲▲▲▲▲ */
 
 /* 「回到過勞儀表板」連結的樣式 */
 .back-link {
