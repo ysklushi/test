@@ -26,7 +26,7 @@ exports.handler = async function (event, context) {
                 title: item.title,
                 link: item.link,
             }))
-            .slice(0, 15); // 最多只回傳 15 則最新聞
+            .slice(0, 20); // 最多只回傳 15 則最新聞
 
         return {
             statusCode: 200,
