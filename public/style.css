@@ -16,6 +16,7 @@ body {
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
+    position: relative; /* 關鍵：為絕對定位的子元素提供參考點 */
 }
 
 .weather-widget {
@@ -95,9 +96,32 @@ body {
     color: #0056b3; /* 圖示顏色 */
 }
 
+/* 法律新聞區塊樣式 */
+.content-area {
+    max-width: 1200px;
+    margin: 2rem auto; /* 上下留白，左右置中 */
+    padding: 0 2rem;
+}
+
+.news-container {
+    background-color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.news-container h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    color: #2; /* 線條粗細 */
+    color: #0056b3; /* 圖示顏色 */
+}
+
 
 /* ===================================== */
-/* ==== 新增：法律新聞區塊樣式 ==== */
+/* ==== 法律新聞區塊樣式 ==== */
 /* ===================================== */
 
 .content-area {
@@ -152,4 +176,26 @@ body {
     font-style: italic;
     padding: 2rem;
     text-align: center;
+}
+
+/* ===================================== */
+/* ==== 回到儀表板連結樣式 ==== */
+/* ===================================== */
+
+.back-to-dashboard-link {
+    position: absolute; /* 絕對定位，相對於 .header-container */
+    top: 50%;
+    right: 0; /* 定位在最右邊 */
+    transform: translateY(-50%); /* 讓它在垂直方向上完美置中 */
+    
+    color: #0056b3;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.back-to-dashboard-link:hover {
+    color: #007bff;
+    text-decoration: underline;
 }
