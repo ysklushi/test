@@ -13,7 +13,7 @@
 
     <header class="main-header">
         <div class="weather-widget">
-            <!-- 1. 下拉選單 -->
+            <!-- 1. 下拉選單 (不變) -->
             <div class="location-selector">
                 <label for="location-select">選擇地區：</label>
                 <select id="location-select">
@@ -22,23 +22,23 @@
                 </select>
             </div>
             
-            <!-- 2. 新增的切換按鈕 -->
-            <button id="day-toggle-btn" class="day-toggle" title="切換預報時段" disabled>
-                <span class="arrow">▶</span>
-            </button>
+            <!-- 2. 全新的滑動式切換按鈕 -->
+            <div id="day-toggle-btn" class="day-toggle-container" title="切換預報時段">
+                <span class="toggle-label today active">今</span>
+                <div class="toggle-switch">
+                    <div class="toggle-knob"></div>
+                </div>
+                <span class="toggle-label tomorrow">明</span>
+            </div>
 
-            <!-- 3. 天氣顯示框 -->
+            <!-- 3. 天氣顯示框 (不變) -->
             <div id="weather-display" class="weather-info-box">
                 <p class="placeholder">請選擇地點以查詢天氣...</p>
             </div>
         </div>
     </header>
 
-    <main class="content">
-        <h1>歡迎來到天氣查詢網頁</h1>
-        <p>您可以在上方的選單中選擇您想查詢的縣市，即時天氣概況將會顯示在右側。</p>
-        <p>本服務資料來源為中央氣象署 RSS 服務。</p>
-    </main>
+    <!-- 下方 main 區塊已完全移除 -->
 
     <script src="script.js"></script>
 </body>

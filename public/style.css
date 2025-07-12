@@ -4,7 +4,6 @@ body {
     margin: 0;
     background-color: #f4f7f6;
     color: #333;
-    line-height: 1.6;
 }
 
 /* 頂部 Header 設計 */
@@ -12,15 +11,12 @@ body {
     background-color: #ffffff;
     padding: 1rem 2rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .weather-widget {
     display: flex;
     align-items: center;
-    gap: 1rem; /* 調整元件間距 */
+    gap: 1.5rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -34,50 +30,72 @@ body {
     cursor: pointer;
 }
 
-/* --- 全新的切換按鈕樣式 --- */
-.day-toggle {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 50%; /* 圓形按鈕 */
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
+/* --- 全新的滑動按鈕樣式 --- */
+.day-toggle-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    transition: background-color 0.2s, transform 0.3s;
-    padding-left: 3px; /* 微調箭頭位置 */
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none; /* 防止選取文字 */
+    padding: 0.5rem;
 }
 
-.day-toggle:hover {
-    background-color: #f0f0f0;
-}
-
-.day-toggle:disabled {
+.day-toggle-container.disabled {
     cursor: not-allowed;
     opacity: 0.5;
 }
 
-.day-toggle .arrow {
+.toggle-label {
+    font-weight: 500;
+    color: #888;
+    transition: color 0.3s;
+}
+
+.toggle-label.active {
+    color: #007bff;
+    font-weight: 700;
+}
+
+.toggle-switch {
+    width: 48px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 13px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.toggle-knob {
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
     transition: transform 0.3s ease-in-out;
 }
 
-/* 按鈕切換到右邊 (明日) 時的樣式 */
-.day-toggle.toggled .arrow {
-    transform: rotate(180deg);
+/* 切換後的樣式 */
+.day-toggle-container.toggled .toggle-switch {
+    background-color: #007bff;
 }
 
-/* --- 天氣資訊顯示框的排版優化 --- */
+.day-toggle-container.toggled .toggle-knob {
+    transform: translateX(22px);
+}
+
+/* 天氣資訊顯示框 */
 .weather-info-box {
     background-color: #e9f5ff;
     border: 1px solid #bde0fe;
     border-radius: 8px;
     padding: 0.8rem 1.2rem;
-    min-height: 42px; /* 調整為單行的高度 */
+    min-height: 42px;
     display: flex;
     align-items: center;
-    flex-grow: 1; /* 讓它佔據剩餘空間 */
-    overflow: hidden; /* 確保內容不超出 */
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .weather-info-box .loading,
@@ -89,15 +107,10 @@ body {
     color: #555;
 }
 
-.weather-info-box .error {
-    color: #d93025;
-}
-
-/* --- 使用 CSS Grid 來完美對齊 --- */
+/* 使用 CSS Grid 完美對齊 */
 .weather-row {
     width: 100%;
     display: grid;
-    /* 定義三欄：第一欄自動填滿，後兩欄有固定最小寬度 */
     grid-template-columns: 1fr minmax(140px, auto) minmax(140px, auto);
     gap: 1rem;
     align-items: center;
@@ -106,12 +119,5 @@ body {
 
 .weather-row .temperature,
 .weather-row .pop {
-    white-space: nowrap; /* 防止溫度和降雨機率換行 */
-}
-
-/* 主內容區域 (不變) */
-.content {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    white-space: nowrap;
 }
