@@ -24,6 +24,12 @@ body {
     gap: 1rem;
 }
 
+/* ▼▼▼▼▼ 此處新增一個 class，用於手機版面控制 ▼▼▼▼▼ */
+.location-selector {
+    display: flex;
+    align-items: center;
+}
+
 #location-select {
     font-size: 1rem;
     padding: 0.5rem 0.8rem;
@@ -155,7 +161,6 @@ body {
     gap: 1rem; /* 每則新聞的間距 */
 }
 
-/* ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼ */
 .news-item {
     display: block;
     padding: 1rem 1.2rem; /* 增加上下內邊距，讓大字體更協調 */
@@ -169,7 +174,6 @@ body {
     font-weight: 400;     /* 設定為一般粗細 (非粗體) */
     line-height: 1.4;     /* 增加行高，避免文字太擠 */
 }
-/* ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲ */
 
 .news-item:hover {
     background-color: #fff;
@@ -183,4 +187,72 @@ body {
     font-style: italic;
     padding: 2rem;
     text-align: center;
+}
+
+/* ================================================== */
+/* ==== ▼▼▼▼▼ 手機版響應式設計 (RWD) ▼▼▼▼▼ ==== */
+/* ================================================== */
+/* 當螢幕寬度小於或等於 768px 時，套用以下樣式 */
+@media (max-width: 768px) {
+
+    /* 調整整體 Header 的邊距 */
+    .main-header {
+        padding: 1rem;
+    }
+
+    /* 讓天氣小工具內的元件可以換行排列 */
+    .weather-widget {
+        flex-wrap: wrap;
+    }
+    
+    /* 讓地區選擇器佔據左半邊空間 */
+    .location-selector {
+        flex-grow: 1; /* 允許它擴展 */
+    }
+
+    /* 在手機上隱藏「地區天氣概況」的文字標籤，節省空間 */
+    .location-selector label {
+        display: none;
+    }
+    
+    /* 讓天氣資訊顯示框強制換行，並佔滿100%寬度 */
+    .weather-info-box {
+        width: 100%;
+        flex-basis: 100%; /* 強制佔滿一行 */
+        flex-grow: 0; /* 不需要再擴展 */
+        margin-top: 1rem; /* 與上方的控制項增加間距 */
+        order: 3; /* 確保它排在最後 */
+    }
+    
+    /* 將天氣資訊改為兩行兩欄的佈局 */
+    .weather-row {
+        grid-template-columns: auto 1fr; /* 第一欄自動寬度(圖示)，第二欄佔滿剩餘空間 */
+        row-gap: 0.5rem; /* 調整行間距 */
+        font-size: 1rem; /* 稍微加大字體方便閱讀 */
+    }
+    
+    /* 調整新聞區塊的邊距 */
+    .content-area {
+        margin-top: 1rem;
+        padding: 0 1rem;
+    }
+
+    .news-container {
+        padding: 1rem 1.2rem;
+    }
+    
+    /* 調整標題與按鈕的排版 */
+    .section-header {
+        flex-direction: column; /* 標題與按鈕改為垂直排列 */
+        align-items: flex-start; /* 全部靠左對齊 */
+        gap: 1rem; /* 增加間距 */
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    /* 適度縮小新聞標題在手機上的字體大小 */
+    .news-item {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
 }
