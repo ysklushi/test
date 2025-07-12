@@ -3,50 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>即時天氣與新聞</title>
+    <title>我的自訂首頁</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="header-container">
-            <div class="weather-widget">
-                <div class="location-selector">
-                    <label for="location-select">地區天氣概況</label>
-                    <select id="location-select">
-                        <option value="01">臺北市</option><option value="02">新北市</option><option value="03">基隆市</option><option value="04">桃園市</option><option value="05">新竹縣</option><option value="06">新竹市</option><option value="07">苗栗縣</option><option value="08">臺中市</option><option value="09">彰化縣</option><option value="10">南投縣</option><option value="11">雲林縣</option><option value="12">嘉義縣</option><option value="13">嘉義市</option><option value="14">臺南市</option><option value="15">高雄市</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option>
-                    </select>
-                </div>
-                
-                <div id="day-toggle-btn" class="day-toggle-container" title="切換預報時段">
-                    <span class="toggle-label today active">今</span>
-                    <div class="toggle-switch">
-                        <div class="toggle-knob"></div>
+    <div class="page-header">
+        <h1>過勞儀表板</h1>
+        <a href="https://karolushi.netlify.app" class="header-link">楊時綱律師</a>
+    </div>
+
+    <!-- ▼▼▼▼▼ 新增功能的獨立房間 ▼▼▼▼▼ -->
+    <div class="addons-container">
+        <!-- 天氣工具區 -->
+        <header class="main-header">
+            <div class="header-container">
+                <div class="weather-widget">
+                    <div class="location-selector">
+                        <label for="location-select">地區天氣概況</label>
+                        <select id="location-select">
+                            <option value="01">臺北市</option><option value="02">新北市</option><option value="03">基隆市</option><option value="04">桃園市</option><option value="05">新竹縣</option><option value="06">新竹市</option><option value="07">苗栗縣</option><option value="08">臺中市</option><option value="09">彰化縣</option><option value="10">南投縣</option><option value="11">雲林縣</option><option value="12">嘉義縣</option><option value="13">嘉義市</option><option value="14">臺南市</option><option value="15">高雄市</option><option value="16">屏東縣</option><option value="17">宜蘭縣</option><option value="18">花蓮縣</option><option value="19">臺東縣</option><option value="20">澎湖縣</option><option value="21">金門縣</option><option value="22">連江縣</option>
+                        </select>
                     </div>
-                    <span class="toggle-label tomorrow">明</span>
-                </div>
-
-                <div id="weather-display" class="weather-info-box">
-                    <p class="placeholder">請選擇地點以查詢天氣...</p>
+                    <div id="day-toggle-btn" class="day-toggle-container" title="切換預報時段">
+                        <span class="toggle-label today active">今</span>
+                        <div class="toggle-switch"><div class="toggle-knob"></div></div>
+                        <span class="toggle-label tomorrow">明</span>
+                    </div>
+                    <div id="weather-display" class="weather-info-box">
+                        <p class="placeholder">請選擇地點以查詢天氣...</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
+        
+        <!-- 法律新聞區 -->
+        <main class="content-area">
+            <section id="legal-news-section" class="news-container">
+                <h2>法律新聞</h2>
+                <div id="news-list" class="news-list-placeholder">
+                    正在載入新聞...
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- ▲▲▲▲▲ 新增功能的獨立房間 ▲▲▲▲▲ -->
 
-    <!-- ▼▼▼▼▼ 新增的法律新聞區塊 ▼▼▼▼▼ -->
-    <main class="content-area">
-        <section id="legal-news-section" class="news-container">
-            <h2>法律新聞</h2>
-            <div id="news-list" class="news-list-placeholder">
-                正在載入新聞...
-            </div>
-        </section>
-    </main>
-    <!-- ▲▲▲▲▲ 新增的法律新聞區塊 ▲▲▲▲▲ -->
+    <a href="https://karolushi.netlify.app" class="mobile-home-link">前往 楊時綱律師 個人網站</a>
+    <nav id="quick-nav" class="quick-nav-container"></nav>
+    <header class="search-header"><!-- ... 後續內容 ... --></header>
+    <main class="container"><div id="link-container"></div></main>
+    <div class="floating-panel"><!-- ... --></div>
+    <a href="#" id="back-to-top-btn" class="back-to-top-btn"><!-- ... --></a>
+    <footer class="page-footer"><!-- ... --></footer>
 
-    <script src="script.js"></script>
+    <script src="links.js"></script>
 </body>
 </html>

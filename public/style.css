@@ -1,21 +1,552 @@
-/* ===================================== */
-/* ==== 新增：法律新聞區塊樣式 ==== */
-/* ===================================== */
+/* --- CSS 樣式區 --- */
+body {
+    font-family: 'Segoe UI', 'Microsoft JhengHei', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
 
-.content-area {
+/* 網頁標題列樣式 */
+.page-header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 15px 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.header-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.header-link:hover {
+    color: #a8c7fa;
+    text-decoration: underline;
+}
+
+/* === 新增：手機版專用連結的樣式 === */
+.mobile-home-link {
+    display: none; /* 關鍵：預設（電腦版）隱藏 */
+    background-color: #34495e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-home-link:hover {
+    background-color: #4a6572;
+}
+
+/* 快速導航列樣式 */
+.quick-nav-container {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.quick-nav-container::-webkit-scrollbar {
+    display: none;
+}
+
+.quick-nav-tag {
+    display: inline-block;
+    background-color: #fff;
+    color: #337ab7;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.quick-nav-tag:hover {
+    background-color: #337ab7;
+    color: #fff;
+    border-color: #2e6da4;
+    transform: translateY(-2px);
+}
+
+.search-header {
+    padding: 60px 20px 40px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.search-container { max-width: 580px; width: 100%; }
+.search-form { width: 100%; }
+.search-box { position: relative; width: 100%; margin: 0 auto; }
+.search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #9aa0a6; font-size: 16px; }
+.search-input { width: 100%; padding: 12px 20px 12px 50px; font-size: 16px; border: 1px solid #dfe1e5; border-radius: 24px; box-shadow: none; transition: box-shadow 0.2s ease; box-sizing: border-box; }
+.search-input:focus { outline: none; box-shadow: 0 1px 6px rgba(32,33,36,0.28); }
+
+.search-form + .search-form {
+    margin-top: 15px;
+}
+
+.container {
     max-width: 1200px;
-    margin: 2rem auto; /* 上下留白，左右置中 */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.link-group {
+    margin-bottom: 40px;
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.link-group:nth-of-type(1) { background-color: #fff1f2; }
+.link-group:nth-of-type(2) { background-color: #fff3e0; }
+.link-group:nth-of-type(3) { background-color: #fffde7; }
+.link-group:nth-of-type(4) { background-color: #e8f5e9; }
+.link-group:nth-of-type(5) { background-color: #e3f2fd; }
+.link-group:nth-of-type(6) { background-color: #e8eaf6; }
+.link-group:nth-of-type(7) { background-color: #f3e5f5; }
+
+.link-group h2 {
+    margin-top: 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    color: #4a4a4a;
+    font-weight: 600;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px; 
+}
+
+@media (min-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(8, 1fr);
+        gap: 15px;
+    }
+}
+@media (min-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(10, 1fr);
+    }
+}
+
+.link-card {
+    display: block; 
+    text-decoration: none; 
+    color: inherit; 
+    background-color: #fff; 
+    border: 1px solid #eee; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    transition: all 0.2s ease-in-out; 
+    text-align: center;
+}
+.link-card:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
+    border-color: #a8c7fa; 
+}
+
+.icon-container {
+    height: 100px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid #eee;
+}
+
+.icon-container i {
+    font-size: 56px; 
+    color: #5a7a9e;
+    transition: all 0.2s ease;
+}
+.link-card:hover .icon-container i { 
+    transform: scale(1.1); 
+}
+
+.link-card .title {
+    min-height: 40px; 
+    white-space: normal; 
+    overflow: visible; 
+    text-overflow: clip;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 5px;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #333;
+}
+
+@media (max-width: 1023px) {
+    .icon-container { height: 90px; }
+    .icon-container i { font-size: 48px; }
+    .link-card .title { font-size: 14px; min-height: 32px; }
+}
+
+/* 包含手機版通用樣式 */
+@media (max-width: 767px) {
+    .page-header {
+        padding: 12px 20px;
+        text-align: center;
+        justify-content: center;
+    }
+    .page-header h1 {
+        font-size: 20px;
+    }
+    .header-link {
+        display: none;
+    }
+    .mobile-home-link {
+        display: block;
+    }
+    .icon-container { height: 80px; }
+    .icon-container i { font-size: 40px; }
+    .link-card .title { font-size: 12px; min-height: 32px; }
+}
+
+.link-card.is-placeholder .icon-container i {
+    color: #b0bec5;
+    opacity: 0.7;
+}
+
+.link-card.is-placeholder .title {
+    color: #aaa;
+}
+
+.back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #2c3e50;
+    color: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    z-index: 999;
+}
+
+.back-to-top-btn i {
+    margin-right: 8px;
+}
+
+.back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+    background-color: #34495e;
+}
+
+/* ============ 功能區樣式 ============ */
+
+/* 1. 頁尾版權聲明樣式 */
+.page-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #e9ecef;
+    color: #6c757d;
+    font-size: 14px;
+    border-top: 1px solid #dee2e6;
+}
+
+/* 2. 右側懸浮功能面板樣式 (電腦版) */
+.floating-panel {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.panel-button {
+    display: flex;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px;
+    text-decoration: none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: -2px 2px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateX(calc(100% - 48px)); /* 預設只露出圖示 */
+}
+
+.panel-button:hover {
+    transform: translateX(0); /* 滑鼠懸浮時完全展開 */
+    background-color: #0056b3;
+}
+
+.panel-button.panel-button-alt {
+    background-color: #28a745;
+}
+.panel-button.panel-button-alt:hover {
+    background-color: #218838;
+}
+
+.panel-button i {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+}
+
+.panel-button .panel-text {
+    margin-left: 10px;
+    margin-right: 12px;
+    font-weight: 600;
+}
+
+/* 3. 懸浮面板在手機上的專用樣式 */
+@media (max-width: 767px) {
+    /* 改變整個面板的位置和外觀，使其成為一個可點擊的整體 */
+    .floating-panel {
+        top: auto;
+        bottom: 85px; 
+        right: 15px; 
+        transform: none;
+        background-color: rgba(44, 62, 80, 0.8);
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+        /* ▼▼▼▼▼ 核心修改處 ▼▼▼▼▼ */
+        flex-direction: column; /* 將收合的圖示改為垂直排列 */
+        gap: 8px;              /* 調整圖示間的垂直間距 */
+        /* ▲▲▲▲▲ 核心修改處 ▲▲▲▲▲ */
+    }
+
+    /* 手機上，按鈕預設不展開，且取消 hover 展開效果 */
+    .panel-button {
+        transform: none;
+        padding: 8px;
+        border-radius: 50%; /* 變成圓形圖示按鈕 */
+        transition: transform 0.3s ease;
+        box-shadow: none;
+    }
+    .panel-button:hover {
+        transform: none; /* 取消 hover 效果 */
+        background-color: #007bff; /* 維持原色 */
+    }
+    .panel-button.panel-button-alt:hover {
+        background-color: #28a745; /* 維持原色 */
+    }
+
+    /* 手機上，隱藏文字，只留圖示 */
+    .panel-button .panel-text {
+        display: none;
+    }
+
+    /* 當面板被點擊後，添加 .is-expanded class 時的樣式 */
+    .floating-panel.is-expanded {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        right: 0;
+        bottom: 80px; /* 微調位置 */
+        cursor: default;
+        /* 展開後方向不變，所以不用再寫 flex-direction: column */
+    }
+    
+    .floating-panel.is-expanded .panel-button {
+        transform: translateX(0); /* 讓按鈕完全展開 */
+        box-shadow: -2px 2px 8px rgba(0,0,0,0.2);
+        padding: 12px; /* 恢復 padding */
+        border-radius: 20px 0 0 20px; /* 恢復圓角 */
+    }
+    
+    /* 展開後，讓文字顯示出來 */
+    .floating-panel.is-expanded .panel-text {
+        display: block;
+    }
+}
+
+
+/* ======================================================= */
+/* ==== 新增功能樣式 (已使用 .addons-container 隔離) ==== */
+/* ======================================================= */
+
+.addons-container .top-widget-section {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.addons-container .weather-widget {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.addons-container #location-select {
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* 滑動按鈕樣式 */
+.addons-container .day-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem;
+}
+
+.addons-container .day-toggle-container.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.addons-container .toggle-label {
+    font-weight: 500;
+    color: #888;
+    transition: color 0.3s;
+}
+
+.addons-container .toggle-label.active {
+    color: #007bff;
+    font-weight: 700;
+}
+
+.addons-container .toggle-switch {
+    width: 48px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 13px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.addons-container .toggle-knob {
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.addons-container .day-toggle-container.toggled .toggle-switch {
+    background-color: #007bff;
+}
+
+.addons-container .day-toggle-container.toggled .toggle-knob {
+    transform: translateX(22px);
+}
+
+/* 天氣資訊顯示框 */
+.addons-container .weather-info-box {
+    background-color: #e9f5ff;
+    border: 1px solid #bde0fe;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.addons-container .weather-info-box .loading, 
+.addons-container .weather-info-box .error, 
+.addons-container .weather-info-box .placeholder {
+    width: 100%;
+    text-align: center;
+    font-style: italic;
+    color: #555;
+}
+
+/* 四欄式 Grid 佈局 */
+.addons-container .weather-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 40px 1fr minmax(130px, auto) minmax(130px, auto);
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+/* 天氣圖示的樣式 */
+.addons-container .weather-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addons-container .weather-icon svg {
+    width: 32px;
+    height: 32px;
+    stroke-width: 2;
+    color: #0056b3;
+}
+
+/* 法律新聞區塊樣式 */
+.addons-container .content-area {
+    max-width: 1200px;
+    margin: 2rem auto 0;
     padding: 0 2rem;
 }
 
-.news-container {
+.addons-container .news-container {
     background-color: #fff;
     padding: 1.5rem 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.news-container h2 {
+.addons-container .news-container h2 {
     margin-top: 0;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
@@ -24,13 +555,13 @@
     font-size: 1.5rem;
 }
 
-#news-list {
+.addons-container #news-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* 每則新聞的間距 */
+    gap: 1rem;
 }
 
-.news-item {
+.addons-container .news-item {
     display: block;
     padding: 0.75rem 1rem;
     border-radius: 6px;
@@ -38,18 +569,18 @@
     color: #333;
     background-color: #f8f9fa;
     border: 1px solid #e9ecef;
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    transition: all 0.2s;
     font-weight: 500;
 }
 
-.news-item:hover {
+.addons-container .news-item:hover {
     background-color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: #0056b3;
 }
 
-.news-list-placeholder {
+.addons-container .news-list-placeholder {
     color: #888;
     font-style: italic;
     padding: 2rem;
