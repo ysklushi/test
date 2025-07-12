@@ -136,6 +136,15 @@ body {
     font-size: 1.5rem;
 }
 
+/* ▼▼▼▼▼ 這裡是新增的樣式 ▼▼▼▼▼ */
+.source-credit {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+/* ▲▲▲▲▲ 這裡是新增的樣式 ▲▲▲▲▲ */
+
 /* 「回到過勞儀表板」連結的樣式 */
 .back-link {
     font-size: 0.9rem;
