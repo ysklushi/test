@@ -74,17 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchAndDisplayWeather(event.target.value);
     });
 
-    // 頁面載入時，執行天氣查詢
     fetchAndDisplayWeather(locationSelect.value);
 
     // ===================================
-    // ==== 新增：法律新聞功能的程式碼 ====
+    // ==== 法律新聞功能的程式碼 ====
     // ===================================
 
     const newsListContainer = document.getElementById('news-list');
 
-    // ▼▼▼▼▼ 這裡是新增的函式 ▼▼▼▼▼
-    // 將日期字串格式化為 YYYY/MM/DD
     function formatDate(dateString) {
         if (!dateString) return '';
         const date = new Date(dateString);
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}/${month}/${day}`;
     }
-    // ▲▲▲▲▲ 這裡是新增的函式 ▲▲▲▲▲
 
     async function fetchAndDisplayLegalNews() {
         try {
@@ -109,13 +105,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
-            // 將新聞資料轉換成包含標題與日期的 HTML 連結
+            // 將新聞資料轉換成包含標題與 metadata 的 HTML 結構
             const newsHtml = newsItems.map(item => {
                 const formattedDate = formatDate(item.pubDate);
+                const sourceText = item.source ? `${item.source}RSS` : '未知來源';
                 return `
                     <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-item">
                         <span class="news-title">${item.title}</span>
-                        <span class="news-date">${formattedDate}</span>
+                        <span class="news-meta">（${formattedDate}。來源：${sourceText}）</span>
                     </a>
                 `;
             }).join('');
@@ -132,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 頁面載入時，也一併執行獲取新聞的函式
     fetchAndDisplayLegalNews();
 
 });

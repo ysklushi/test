@@ -14,28 +14,64 @@ const LEGAL_KEYWORDS = [
 ];
 
 exports.handler = async function (event, context) {
-    const CNA_SOCIAL_RSS_URL = 'https://feeds.feedburner.com/rsscna/social';
+    // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
+    // 更新為您指定的四個 RSS 來源
+    const RSS_FEEDS = [
+        'https://feeds.feedburner.com/rsscna/social',      // 中央社
+        'https://news.ltn.com.tw/rss/society.xml',          // 自由時報
+        'https://newtalk.tw/rss/category/14',              // Newstalk新聞
+        'https://cmsapi.businessweekly.com.tw/?CategoryId=efd99109-9e15-422e-97f0-078b21322450&TemplateId=8E19CF43-50E5-4093-B72D-70A912962D55' // 商業週刊
+    ];
+    // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
 
     try {
-        const feed = await parser.parseURL(CNA_SOCIAL_RSS_URL);
+        const feeds = await Promise.all(
+            RSS_FEEDS.map(url => parser.parseURL(url).catch(e => {
+                console.warn(`無法解析 RSS: ${url}`, e.message); // 增加錯誤處理，避免單一來源失敗導致全部中斷
+                return null;
+            }))
+        );
 
-        if (!feed.items || feed.items.length === 0) {
+        // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
+        // 將所有來源的新聞合併，並為每則新聞加上來源標記
+        const allItems = feeds.filter(Boolean).reduce((acc, feed) => {
+            if (feed && feed.items) {
+                const feedUrl = feed.feedUrl || (feed.link || '');
+                let sourceName = feed.title; // 預設使用 RSS 的標題
+                
+                // 根據 feed 的 URL 判斷來源名稱
+                if (feedUrl.includes('cna') || feedUrl.includes('feedburner')) sourceName = '中央社';
+                else if (feedUrl.includes('ltn.com.tw')) sourceName = '自由時報';
+                else if (feedUrl.includes('newtalk.tw')) sourceName = 'Newstalk新聞';
+                else if (feedUrl.includes('businessweekly.com.tw')) sourceName = '商業週刊';
+
+                const itemsWithSource = feed.items.map(item => ({
+                    ...item,
+                    source: sourceName // 附加來源屬性
+                }));
+                return acc.concat(itemsWithSource);
+            }
+            return acc;
+        }, []);
+
+        if (allItems.length === 0) {
             return { statusCode: 200, body: JSON.stringify([]) };
         }
-
-        // 核心篩選邏輯：檢查標題是否包含任何一個關鍵字
-        const filteredNews = feed.items
+        
+        // 核心篩選邏輯：
+        const filteredNews = allItems
             .filter(item => 
                 item.title && LEGAL_KEYWORDS.some(keyword => item.title.includes(keyword))
             )
-            // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
+            .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
+            .slice(0, 50)
             .map(item => ({
                 title: item.title,
                 link: item.link,
-                pubDate: item.pubDate // 新增：取得新聞的發布日期
-            }))
-            // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
-            .slice(0, 20); // 最多只回傳 20 則最新聞
+                pubDate: item.pubDate,
+                source: item.source // 將來源資訊一起回傳
+            }));
+        // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
 
         return {
             statusCode: 200,
