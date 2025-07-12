@@ -83,9 +83,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const newsListContainer = document.getElementById('news-list');
 
+    // ▼▼▼▼▼ 這裡是新增的函式 ▼▼▼▼▼
+    // 將日期字串格式化為 YYYY/MM/DD
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}/${month}/${day}`;
+    }
+    // ▲▲▲▲▲ 這裡是新增的函式 ▲▲▲▲▲
+
     async function fetchAndDisplayLegalNews() {
         try {
-            // 向我們新的後端函式發送請求
             const response = await fetch('/api/legal-news');
             if (!response.ok) throw new Error('無法載入新聞資料');
 
@@ -97,10 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 將新聞資料轉換成 HTML 連結
-            const newsHtml = newsItems.map(item => 
-                `<a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-item">${item.title}</a>`
-            ).join('');
+            // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
+            // 將新聞資料轉換成包含標題與日期的 HTML 連結
+            const newsHtml = newsItems.map(item => {
+                const formattedDate = formatDate(item.pubDate);
+                return `
+                    <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="news-item">
+                        <span class="news-title">${item.title}</span>
+                        <span class="news-date">${formattedDate}</span>
+                    </a>
+                `;
+            }).join('');
+            // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
 
             newsListContainer.innerHTML = newsHtml;
             newsListContainer.classList.remove('news-list-placeholder');

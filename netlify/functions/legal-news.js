@@ -1,7 +1,6 @@
 const Parser = require('rss-parser');
 const parser = new Parser();
 
-// ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
 // 您指定的法律相關關鍵字 (已為您整理並移除重複)
 const LEGAL_KEYWORDS = [
     // 原始關鍵字
@@ -13,7 +12,6 @@ const LEGAL_KEYWORDS = [
     '改判', '電子腳鐐', '追訴', '時效', '繼承', '遺產', '懲戒法院', 
     '司法院', '法務部', '貪污', '賄選', '裁定', '緩起訴'
 ];
-// ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
 
 exports.handler = async function (event, context) {
     const CNA_SOCIAL_RSS_URL = 'https://feeds.feedburner.com/rsscna/social';
@@ -30,10 +28,13 @@ exports.handler = async function (event, context) {
             .filter(item => 
                 item.title && LEGAL_KEYWORDS.some(keyword => item.title.includes(keyword))
             )
+            // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
             .map(item => ({
                 title: item.title,
                 link: item.link,
+                pubDate: item.pubDate // 新增：取得新聞的發布日期
             }))
+            // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
             .slice(0, 20); // 最多只回傳 20 則最新聞
 
         return {
