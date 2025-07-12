@@ -1,11 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 獲取所有需要的 DOM 元素
     const locationSelect = document.getElementById('location-select');
     const weatherDisplay = document.getElementById('weather-display');
+    const dayToggleButton = document.getElementById('day-toggle-btn');
 
+    // 用來儲存從 API 獲取的完整預報資料 (例如 [今日, 明日])
+    let allForecasts = [];
+    // 用來追蹤當前顯示的是哪一天 (0: 今日, 1: 明日)
+    let currentDayIndex = 0;
+
+    // 函式：只渲染指定某一天的天氣
+    function renderWeather(dayIndex) {
+        // 如果沒有那天的資料，就什麼都不做
+        if (!allForecasts[dayIndex]) return;
+
+        const forecast = allForecasts[dayIndex];
+        const html = `
+            <div class="weather-row">
+                <span class="description">${forecast.description}</span>
+                <span class="temperature">溫度: ${forecast.temperature}</span>
+                <span class="pop">降雨機率: ${forecast.pop}</span>
+            </div>
+        `;
+        weatherDisplay.innerHTML = html;
+    }
+
+    // 函式：獲取天氣資料
     async function fetchAndDisplayWeather(cityId, cityName) {
-        // 1. 為了更好的使用者體驗，先清空舊內容並顯示載入訊息
+        // 1. 重設狀態
         weatherDisplay.innerHTML = `<p class="loading">正在查詢 ${cityName} 的天氣...</p>`;
-
+        dayToggleButton.disabled = true;
+        dayToggleButton.classList.remove('toggled');
+        allForecasts = [];
+        currentDayIndex = 0;
+        
         const apiEndpoint = `/api/rss-weather?cityId=${cityId}`;
 
         try {
@@ -14,47 +42,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 const errorData = await response.json();
                 throw new Error(errorData.error || '無法從伺服器獲取資料');
             }
+            
+            // 2. 將獲取的預報陣列存起來
+            allForecasts = await response.json();
 
-            const forecasts = await response.json();
-
-            if (!Array.isArray(forecasts) || forecasts.length === 0) {
-                throw new Error('資料格式不正確或無預報資料');
+            if (!Array.isArray(allForecasts) || allForecasts.length === 0) {
+                throw new Error('資料格式不正確');
             }
 
-            // 2. 使用 map 和 join 動態產生多個天氣預報列
-            const forecastRowsHtml = forecasts.map(item => `
-                <div class="weather-row">
-                    <span class="description">${item.description}</span>
-                    <span class="temperature">溫度: ${item.temperature}</span>
-                    <span class="pop">降雨機率: ${item.pop}</span>
-                </div>
-            `).join('');
+            // 3. 預設渲染第一天 (今日) 的天氣
+            renderWeather(0);
 
-            // 3. 組合最終要放入藍色盒子裡的完整 HTML
-            const innerHtml = `
-                <div class="weather-content">
-                    <div class="city-title">${cityName}</div>
-                    <div class="forecast-list">
-                        ${forecastRowsHtml}
-                    </div>
-                </div>
-            `;
-
-            // 4. 將產生好的 HTML 放入顯示區
-            weatherDisplay.innerHTML = innerHtml;
+            // 4. 如果有超過一天的資料，才啟用切換按鈕
+            if (allForecasts.length > 1) {
+                dayToggleButton.disabled = false;
+            }
 
         } catch (error) {
             weatherDisplay.innerHTML = `<p class="error">查詢失敗：${error.message}</p>`;
-            console.error('Fetch error:', error);
         }
     }
 
-    // (監聽事件的程式碼不變)
+    // 按鈕的點擊事件
+    dayToggleButton.addEventListener('click', () => {
+        // 切換索引 (0 -> 1, 1 -> 0)
+        currentDayIndex = 1 - currentDayIndex;
+        
+        // 重新渲染對應日期的天氣
+        renderWeather(currentDayIndex);
+
+        // 更新按鈕的視覺狀態 (箭頭方向)
+        dayToggleButton.classList.toggle('toggled');
+    });
+
+    // 下拉選單的變動事件
     locationSelect.addEventListener('change', (event) => {
         const selectedOption = event.target.options[event.target.selectedIndex];
         fetchAndDisplayWeather(selectedOption.value, selectedOption.text);
     });
 
+    // 頁面首次載入時，自動查詢預設城市
     const initialOption = locationSelect.options[locationSelect.selectedIndex];
     fetchAndDisplayWeather(initialOption.value, initialOption.text);
 });

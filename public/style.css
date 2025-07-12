@@ -20,18 +20,12 @@ body {
 .weather-widget {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem; /* 調整元件間距 */
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* 下拉選單區域 */
-.location-selector {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
+/* 下拉選單 */
 #location-select {
     font-size: 1rem;
     padding: 0.5rem 0.8rem;
@@ -40,65 +34,84 @@ body {
     cursor: pointer;
 }
 
-/* --- 天氣資訊顯示框的全新樣式 --- */
+/* --- 全新的切換按鈕樣式 --- */
+.day-toggle {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%; /* 圓形按鈕 */
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, transform 0.3s;
+    padding-left: 3px; /* 微調箭頭位置 */
+}
 
-/* 1. 藍色外框本人 */
+.day-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+.day-toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.day-toggle .arrow {
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 按鈕切換到右邊 (明日) 時的樣式 */
+.day-toggle.toggled .arrow {
+    transform: rotate(180deg);
+}
+
+/* --- 天氣資訊顯示框的排版優化 --- */
 .weather-info-box {
     background-color: #e9f5ff;
     border: 1px solid #bde0fe;
     border-radius: 8px;
     padding: 0.8rem 1.2rem;
-    min-height: 70px; /* 調整最小高度以容納多行 */
-    display: flex; /* 使用 flex 讓內容垂直置中 */
+    min-height: 42px; /* 調整為單行的高度 */
+    display: flex;
     align-items: center;
     flex-grow: 1; /* 讓它佔據剩餘空間 */
+    overflow: hidden; /* 確保內容不超出 */
 }
 
-/* 2. 載入中或錯誤訊息的樣式 */
 .weather-info-box .loading,
 .weather-info-box .error,
 .weather-info-box .placeholder {
-    color: #555;
-    font-style: italic;
     width: 100%;
     text-align: center;
+    font-style: italic;
+    color: #555;
 }
 
 .weather-info-box .error {
     color: #d93025;
 }
 
-/* 3. 天氣資訊的整體容器 */
-.weather-content {
-    width: 100%;
-}
-
-/* 4. 城市標題的樣式 */
-.city-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #0056b3;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid #bde0fe;
-    padding-bottom: 0.3rem;
-}
-
-/* 5. 每一列預報的樣式 */
+/* --- 使用 CSS Grid 來完美對齊 --- */
 .weather-row {
-    display: flex;
-    justify-content: space-between; /* 讓元素平均分布 */
+    width: 100%;
+    display: grid;
+    /* 定義三欄：第一欄自動填滿，後兩欄有固定最小寬度 */
+    grid-template-columns: 1fr minmax(140px, auto) minmax(140px, auto);
+    gap: 1rem;
     align-items: center;
     font-size: 0.95rem;
-    padding: 0.2rem 0;
 }
 
-/* --- 主內容區域 (不變) --- */
+.weather-row .temperature,
+.weather-row .pop {
+    white-space: nowrap; /* 防止溫度和降雨機率換行 */
+}
+
+/* 主內容區域 (不變) */
 .content {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-h1 {
-    color: #0056b3;
 }
