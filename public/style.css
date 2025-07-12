@@ -1,20 +1,104 @@
-/* --- 新增的樣式，用於多列顯示 --- */
-
-.weather-info-box .weather-details {
-    /* 改用 flex-direction: column 讓標題和預報垂直排列 */
-    flex-direction: column;
-    align-items: flex-start; /* 左對齊 */
-    gap: 0.5rem; /* 行間距 */
+/* 全域與基本設定 */
+body {
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', '微軟正黑體', sans-serif;
+    margin: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    line-height: 1.6;
 }
 
-.weather-info-box .city-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
+/* 頂部 Header 設計 */
+.main-header {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.weather-info-box .weather-row {
+.weather-widget {
     display: flex;
-    gap: 1.2rem;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 下拉選單區域 */
+.location-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#location-select {
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* --- 天氣資訊顯示框的全新樣式 --- */
+
+/* 1. 藍色外框本人 */
+.weather-info-box {
+    background-color: #e9f5ff;
+    border: 1px solid #bde0fe;
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    min-height: 70px; /* 調整最小高度以容納多行 */
+    display: flex; /* 使用 flex 讓內容垂直置中 */
+    align-items: center;
+    flex-grow: 1; /* 讓它佔據剩餘空間 */
+}
+
+/* 2. 載入中或錯誤訊息的樣式 */
+.weather-info-box .loading,
+.weather-info-box .error,
+.weather-info-box .placeholder {
+    color: #555;
+    font-style: italic;
     width: 100%;
-    font-size: 0.9rem;
+    text-align: center;
+}
+
+.weather-info-box .error {
+    color: #d93025;
+}
+
+/* 3. 天氣資訊的整體容器 */
+.weather-content {
+    width: 100%;
+}
+
+/* 4. 城市標題的樣式 */
+.city-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0056b3;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #bde0fe;
+    padding-bottom: 0.3rem;
+}
+
+/* 5. 每一列預報的樣式 */
+.weather-row {
+    display: flex;
+    justify-content: space-between; /* 讓元素平均分布 */
+    align-items: center;
+    font-size: 0.95rem;
+    padding: 0.2rem 0;
+}
+
+/* --- 主內容區域 (不變) --- */
+.content {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #0056b3;
 }
