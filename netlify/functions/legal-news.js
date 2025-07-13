@@ -15,12 +15,13 @@ const LEGAL_KEYWORDS = [
 
 exports.handler = async function (event, context) {
     // ▼▼▼▼▼ 這裡是修改的部分 ▼▼▼▼▼
-    // 更新為您指定的四個 RSS 來源
+    // 更新為您指定的 RSS 來源，已加入「報導者」
     const RSS_FEEDS = [
         'https://feeds.feedburner.com/rsscna/social',      // 中央社
         'https://news.ltn.com.tw/rss/society.xml',          // 自由時報
         'https://newtalk.tw/rss/category/14',              // Newstalk新聞
-        'https://cmsapi.businessweekly.com.tw/?CategoryId=efd99109-9e15-422e-97f0-078b21322450&TemplateId=8E19CF43-50E5-4093-B72D-70A912962D55' // 商業週刊
+        'https://cmsapi.businessweekly.com.tw/?CategoryId=efd99109-9e15-422e-97f0-078b21322450&TemplateId=8E19CF43-50E5-4093-B72D-70A912962D55', // 商業週刊
+        'https://www.twreporter.org/a/rss2.xml'             // 報導者 (新加入)
     ];
     // ▲▲▲▲▲ 這裡是修改的部分 ▲▲▲▲▲
 
@@ -39,11 +40,12 @@ exports.handler = async function (event, context) {
                 const feedUrl = feed.feedUrl || (feed.link || '');
                 let sourceName = feed.title; // 預設使用 RSS 的標題
                 
-                // 根據 feed 的 URL 判斷來源名稱
+                // 根據 feed 的 URL 判斷來源名稱，已加入「報導者」的判斷邏輯
                 if (feedUrl.includes('cna') || feedUrl.includes('feedburner')) sourceName = '中央社';
                 else if (feedUrl.includes('ltn.com.tw')) sourceName = '自由時報';
                 else if (feedUrl.includes('newtalk.tw')) sourceName = 'Newstalk新聞';
                 else if (feedUrl.includes('businessweekly.com.tw')) sourceName = '商業週刊';
+                else if (feedUrl.includes('twreporter.org')) sourceName = '報導者';
 
                 const itemsWithSource = feed.items.map(item => ({
                     ...item,
